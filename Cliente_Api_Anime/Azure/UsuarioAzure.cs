@@ -12,7 +12,7 @@ namespace Cliente_Api_Anime.Azure
     {
         static string connectionString = @"Server=ALEVIERA;Database=Anime;Trusted_Connection=True;";
 
-        public static List<UsuarioAzure> usuario;
+        public static List<UsuarioAzure> usu;
         
 
 
@@ -33,23 +33,26 @@ namespace Cliente_Api_Anime.Azure
 
                 DataAdapter.Fill(dataTable);
 
-                Usuario usuario = new Usuario();
+                usuarios = new List<UsuarioAzure>();
 
-                
-                
+                //COn este for hacemos que ingrese un id la cantidad de veces segun las filas que encuentre
+                for (int i = 0; i < dataTable.Rows.Count; i++)
+                {
+                    Usuario usuario = new Usuario();
+                    usuario.id_usuario = int.Parse(dataTable.Rows[i]["id_usuario"].ToString());
+                    usuario.nombre_usuario = dataTable.Rows[i]["nombre_usuario"].ToString();
+                    usuario.pass = dataTable.Rows[i]["pass"].ToString();
+                    usuario.tipo_usuario = dataTable.Rows[i]["tipo_usuario"].ToString();
 
-                
+                    usu.Add(usuario);//error aqui :c
+                    
+                }
 
-                     
 
-            
-
-               
-                
 
             }
 
-            return usuario;
+            return usu;
         }
     }
 }
