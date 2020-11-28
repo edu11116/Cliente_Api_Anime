@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Cliente_Api_Anime.Models
 {
-    public class usuarios
+    public class usuario
     {
         public int id_usuario { get; set; }
         public string nombre_usuario { get; set; } 
