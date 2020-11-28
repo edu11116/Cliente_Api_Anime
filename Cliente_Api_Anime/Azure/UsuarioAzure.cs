@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Cliente_Api_Anime.Models;
 
 namespace Cliente_Api_Anime.Azure
 {
@@ -18,7 +20,7 @@ namespace Cliente_Api_Anime.Azure
         //OBTENER USUARIOS
         public static List<UsuarioAzure> ObtenerUsuarios()
         {
-            var dataTable = new dataTable();
+            var dataTable = new DataTable();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -31,7 +33,14 @@ namespace Cliente_Api_Anime.Azure
 
                 DataAdapter.Fill(dataTable);
 
+                Usuario usuario = new Usuario();
+
                 
+                
+
+                
+
+                     
 
             
 
