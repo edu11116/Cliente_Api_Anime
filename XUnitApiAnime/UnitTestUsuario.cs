@@ -11,7 +11,7 @@ namespace XUnitApiAnime
     public class UnitTestUsuario
     {
         [Fact]
-        public void TestObtenerPlantas()
+        public void TestObtenerUsuarios()
         {
             //Arrange
                 bool estaVacio = false;
@@ -25,9 +25,16 @@ namespace XUnitApiAnime
             //Assert
             Assert.False(estaVacio);
 
+        }
 
+        public void TestObtenerUsuarioPorId()
+        {
+            int idProbar = 1;
+            Usuario usuarioRetornado;
 
+            usuarioRetornado = UsuarioAzure.ObtenerUsuarioPorId(idProbar);
 
+            Assert.NotNull(usuarioRetornado);
         }
     }
 }

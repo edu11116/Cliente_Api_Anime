@@ -27,6 +27,20 @@ namespace Cliente_Api_Anime.Azure
             
         }
 
+        public static Usuario ObtenerUsuarioPorId(int id_usuario)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                var consultaSql = $"select * from Usuario where id_usuario = {id_usuario}";
+
+                var comando = ConsultaSqlUsuario(connection, consultaSql);
+
+                var dataTable = LlenarDataTable((SqlCommand)comando);//la conversion explicita no se si esta correcta((SqlCommand)comando)
+
+                return CreacionUsuario(dataTable);
+            }
+        }
+
 
         private static object ConsultaSqlUsuario(SqlConnection connection, string consulta)
         {
@@ -35,6 +49,24 @@ namespace Cliente_Api_Anime.Azure
             connection.Open();
             return sqlCommand;
         }
+
+        private static Usuario CreacionUsuario(DataTable dataTable)
+        {
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+                Usuario usuario = new Usuario();
+                usuario.id_usuario = int.Parse(dataTable.Rows[0]["id_usuario"].ToString());
+                usuario.nombre_usuario = dataTable.Rows[0]["nombre_usuario"].ToString();
+                usuario.pass = dataTable.Rows[0]["pass"].ToString();
+                usuario.tipo_usuario = dataTable.Rows[0]["tipo_usuario"].ToString();
+                return usuario;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
 
         public static DataTable LlenarDataTable(SqlCommand comando)
         {
