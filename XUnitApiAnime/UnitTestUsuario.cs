@@ -36,5 +36,16 @@ namespace XUnitApiAnime
 
             Assert.NotNull(usuarioRetornado);
         }
+
+        public void TestObtenerUsuarioPorNombre()
+        {
+            string nombreUsu = "Ale";
+
+            Usuario usuarioRetornado;
+
+            usuarioRetornado = UsuarioAzure.ObtenerUsuarioPorNombre(nombreUsu);
+
+            Assert.NotNull(usuarioRetornado);
+        }
     }
 }
