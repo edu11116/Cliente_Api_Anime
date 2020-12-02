@@ -31,9 +31,9 @@ namespace Cliente_Api_Anime.Azure
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-               // var consultaSql = $"select * from Usuario where id_usuario = {id_usuario}";
+                var consultaSql = $"select * from Usuario where id_usuario = {id_usuario}";
 
-                var comando = ConsultaSqlUsuarioPorId(connection, id_usuario);
+                var comando = ConsultaSqlUsuario(connection, consultaSql);
 
                 var dataTable = LlenarDataTable((SqlCommand)comando);//la conversion explicita no se si esta correcta((SqlCommand)comando)
 
@@ -45,18 +45,15 @@ namespace Cliente_Api_Anime.Azure
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-               // var consultaSql = $"select * from Usuario where nombre_usuario = '{nombre_usuario}'";
+                var consultaSql = $"select * from Usuario where nombre_usuario = '{nombre_usuario}'";
 
-                var comando = ConsultaSqlUsuarioPorNombre(connection, nombre_usuario);
+                var comando = ConsultaSqlUsuario(connection, consultaSql);
 
                 var dataTable = LlenarDataTable((SqlCommand)comando);//la conversion explicita no se si esta correcta((SqlCommand)comando)
 
                 return CreacionUsuario(dataTable);
             }
         }
-
-
-
 
         private static object ConsultaSqlUsuario(SqlConnection connection, string consulta)
         {
@@ -65,23 +62,6 @@ namespace Cliente_Api_Anime.Azure
             connection.Open();
             return sqlCommand;
         }
-
-        private static object ConsultaSqlUsuarioPorId(SqlConnection connection, int id_usuario)
-        {
-            SqlCommand sqlCommand = new SqlCommand(null, connection);
-            sqlCommand.CommandText = $"select * from Usuario where id_usuario = {id_usuario}";
-            connection.Open();
-            return sqlCommand;
-        }
-
-        private static SqlCommand ConsultaSqlUsuarioPorNombre(SqlConnection connection, string nombre_usuario)
-        {
-            SqlCommand sqlCommand = new SqlCommand(null, connection);
-            sqlCommand.CommandText = $"select * from Usuario where id_usuario = {nombre_usuario}";
-            connection.Open();
-            return sqlCommand;
-        }
-
 
         private static Usuario CreacionUsuario(DataTable dataTable)
         {

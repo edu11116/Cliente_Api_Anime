@@ -27,6 +27,7 @@ namespace XUnitApiAnime
 
         }
 
+        [Fact]
         public void TestObtenerUsuarioPorId()
         {
             int idProbar = 1;
@@ -37,6 +38,7 @@ namespace XUnitApiAnime
             Assert.NotNull(usuarioRetornado);
         }
 
+        [Fact]
         public void TestObtenerUsuarioPorNombre()
         {
             string nombreUsu = "Ale";
