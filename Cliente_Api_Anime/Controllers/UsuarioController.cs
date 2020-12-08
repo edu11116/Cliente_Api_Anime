@@ -1,4 +1,5 @@
 ﻿using Cliente_Api_Anime.Azure;
+using Cliente_Api_Anime.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,43 @@ namespace Cliente_Api_Anime.Controllers
         {
             var usuariosRecibidos = UsuarioAzure.ObtenerUsuarios();
             return new JsonResult(usuariosRecibidos);
-        }    
+        }
+
+        //GET: api/usuario/{1}-{nombre}
+        [HttpGet("{id_usuario}")]
+        public JsonResult ObtenerUsuario(string id_usuario)
+        {
+            var conversionExitosa = int.TryParse(id_usuario, out int idConvertido);
+            Usuario usuarioRecibido;
+
+
+            if (conversionExitosa)
+            {
+                usuarioRecibido =  UsuarioAzure.ObtenerUsuarioPorId(idConvertido);
+            }
+            else
+            {
+                usuarioRecibido = UsuarioAzure.ObtenerUsuarioPorNombre(id_usuario);
+            }
+
+            if (usuarioRecibido is null)
+            {
+                return new JsonResult($"Intente nuevamente con un parametro distino a {id_usuario}");
+            }
+            else
+            {
+                return new JsonResult(usuarioRecibido);
+            }
+
+            //POST: api/usuario
+            [HttpPost]
+            public void AgregarUsuario([FromBody] Usuario usuario)
+            {
+                UsuarioAzure.AgregarUsuario(usuario);
+            }
+
+           
+        }
 
 
 

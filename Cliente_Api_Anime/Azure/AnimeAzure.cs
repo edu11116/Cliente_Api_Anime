@@ -68,6 +68,8 @@ namespace Cliente_Api_Anime.Azure
                 anime.duracion = dataTable.Rows[0]["duracion"].ToString();
                 anime.categoria = dataTable.Rows[0]["categoria"].ToString();
                 anime.calidad = dataTable.Rows[0]["calidad"].ToString();
+
+                return anime;
             }
             else
             {

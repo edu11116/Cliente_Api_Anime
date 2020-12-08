@@ -80,6 +80,118 @@ namespace Cliente_Api_Anime.Azure
             }
         }
 
+        //DESDE AQUI AGREGAR A ANIMESAZURE
+
+        public static int AgregarUsuario(Usuario usuario)
+        {
+            int filasAfectadas = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, connection);
+                sqlCommand.CommandText = "Insert into Usuario (id_usuario, nombre_usuario, pass, tipo_usuario) values (@id_usuario, @nombre_usuario, @pass, @tipo_usuario )";
+                sqlCommand.Parameters.AddWithValue("@id_usuario", usuario.id_usuario);
+                sqlCommand.Parameters.AddWithValue("@nombre_usuario", usuario.nombre_usuario);
+                sqlCommand.Parameters.AddWithValue("@pass", usuario.pass);
+                sqlCommand.Parameters.AddWithValue("@tipo_usuario", usuario.tipo_usuario);
+
+                try
+                {
+                    connection.Open();
+                    filasAfectadas = sqlCommand.ExecuteNonQuery();
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+
+            }
+            return filasAfectadas;
+        }
+
+        public static int AgregarUsuario(int id_usuario, string nombre_usuario, string pass, string tipo_usuario)
+        {
+            int resultado = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, connection);
+                sqlCommand.CommandText = "Insert into Usuario (id_usuario, nombre_usuario, pass, tipo_usuario) values (@id_usuario, @nombre_usuario, @pass, @tipo_usuario )";
+                sqlCommand.Parameters.AddWithValue("@id_usuario", id_usuario);
+                sqlCommand.Parameters.AddWithValue("@nombre_usuario", nombre_usuario);
+                sqlCommand.Parameters.AddWithValue("@pass", pass);
+                sqlCommand.Parameters.AddWithValue("@tipo_usuario", tipo_usuario);
+                try
+                {
+                    connection.Open();
+                    resultado = sqlCommand.ExecuteNonQuery();
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return resultado;
+        }
+
+        public static int EliminarUsuarioPorNombre(string nombre_usuario)
+        {
+            int resultado = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, connection);
+                sqlCommand.CommandText = "Delete from Usuario where nombre_usuario = @nombre_usuario";
+                sqlCommand.Parameters.AddWithValue("@nombre_usuario", nombre_usuario);
+
+                try
+                {
+                    connection.Open();
+                    resultado = sqlCommand.ExecuteNonQuery();
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                return resultado;
+            }
+        }
+
+        public static int ActualizarUsuarioPorId(Usuario usuario)
+        {
+            int resultado = 0;
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Update Usuario SET  nombre_usuario = @nombre_usuario, pass = @pass, tipo_usuario = @tipo_usuario where id_usuario = @id_usuario";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_usuario", usuario.nombre_usuario);
+                sqlCommand.Parameters.AddWithValue("@pass", usuario.pass);
+                sqlCommand.Parameters.AddWithValue("@tipo_usuario", usuario.tipo_usuario);
+
+                try
+                {
+                    sqlConnection.Open();
+                    resultado = sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+
+            return resultado;
+        }
+
+        //HASTA AQUIIIIIIIIIIII EDUARDOOOOO XDD
+
 
         public static DataTable LlenarDataTable(SqlCommand comando)
         {
