@@ -118,7 +118,7 @@ namespace Cliente_Api_Anime.Azure
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand sqlCommand = new SqlCommand(null, connection);
-                sqlCommand.CommandText = "Insert into Usuario (id_usuario, nombre_usuario, pass, tipo_usuario) values (@id_usuario, @nombre_usuario, @pass, @tipo_usuario )";
+                sqlCommand.CommandText = "Insert into Usuario (id_usuario, nombre_usuario, pass, tipo_usuario) values (@id_usuario, @nombre_usuario, @pass, @tipo_usuario)";
                 sqlCommand.Parameters.AddWithValue("@id_usuario", id_usuario);
                 sqlCommand.Parameters.AddWithValue("@nombre_usuario", nombre_usuario);
                 sqlCommand.Parameters.AddWithValue("@pass", pass);

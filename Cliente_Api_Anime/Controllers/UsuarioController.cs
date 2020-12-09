@@ -15,7 +15,7 @@ namespace Cliente_Api_Anime.Controllers
     public class UsuarioController : ControllerBase
     {
 
-        //localhost:8080/api/usuario/all
+        //localhost:44341/api/usuario/all
 
         //GET: api/<UsuarioController>/all
         [HttpGet("all")]
@@ -50,15 +50,14 @@ namespace Cliente_Api_Anime.Controllers
             {
                 return new JsonResult(usuarioRecibido);
             }
+  
+        }
 
-            //POST: api/usuario
-            [HttpPost]
-            public void AgregarUsuario([FromBody] Usuario usuario)
-            {
-                UsuarioAzure.AgregarUsuario(usuario);
-            }
-
-           
+        //POST: api/usuario
+        [HttpPost]
+        public void AgregarUsuario([FromBody] Usuario usuario)
+        {
+            UsuarioAzure.AgregarUsuario(usuario);
         }
 
 
