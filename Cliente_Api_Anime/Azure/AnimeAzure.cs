@@ -41,7 +41,7 @@ namespace Cliente_Api_Anime.Azure
             }
         }
 
-        public static Animes ObtenerAnimePorNombre(int nombre_anime)
+        public static Animes ObtenerAnimePorNombre(string nombre_anime)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -75,6 +75,120 @@ namespace Cliente_Api_Anime.Azure
             {
                 return null;
             }
+        }
+
+        public static int AgregarAnimes(Animes animes)
+        {
+            int filasAfectadas = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, connection);
+                sqlCommand.CommandText = "Insert into Animes (id_anime, nombre_anime, categoria, genero, duracion, capitulo, calidad) values (@id_anime, @nombre_anime, @categoria, @genero, @duracion, @capitulo, @calidad )";
+                sqlCommand.Parameters.AddWithValue("@id_anime", animes.id_anime);
+                sqlCommand.Parameters.AddWithValue("@nombre_anime", animes.nombre_anime);
+                sqlCommand.Parameters.AddWithValue("@categoria", animes.categoria);
+                sqlCommand.Parameters.AddWithValue("@genero", animes.genero);
+                sqlCommand.Parameters.AddWithValue("@duracion", animes.duracion);
+                sqlCommand.Parameters.AddWithValue("@capitulo", animes.capitulo);
+                sqlCommand.Parameters.AddWithValue("@calidad", animes.calidad);
+
+                try
+                {
+                    connection.Open();
+                    filasAfectadas = sqlCommand.ExecuteNonQuery();
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+
+            }
+            return filasAfectadas;
+        }
+
+        public static int AgregarAnimes(int id_anime, string nombre_anime, string categoria, string genero, string duracion, int capitulo, string calidad)
+        {
+            int resultado = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, connection);
+                sqlCommand.CommandText = "Insert into Animes (id_anime, nombre_anime, categoria, genero, duracion, capitulo, calidad) values (@id_anime, @nombre_anime, @categoria, @genero, @duracion, @capitulo, @calidad )";
+                sqlCommand.Parameters.AddWithValue("@id_anime", id_anime);
+                sqlCommand.Parameters.AddWithValue("@nombre_anime", nombre_anime);
+                sqlCommand.Parameters.AddWithValue("@categoria", categoria);
+                sqlCommand.Parameters.AddWithValue("@genero", genero);
+                sqlCommand.Parameters.AddWithValue("@duracion", duracion);
+                sqlCommand.Parameters.AddWithValue("@capitulo", capitulo);
+                sqlCommand.Parameters.AddWithValue("@calidad", calidad);
+                try
+                {
+                    connection.Open();
+                    resultado = sqlCommand.ExecuteNonQuery();
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+            return resultado;
+        }
+
+        public static int EliminarAnimePorNombre(string nombre_anime)
+        {
+            int resultado = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, connection);
+                sqlCommand.CommandText = "Delete from Animes where nombre_anime = @nombre_anime";
+                sqlCommand.Parameters.AddWithValue("@nombre_anime", nombre_anime);
+
+                try
+                {
+                    connection.Open();
+                    resultado = sqlCommand.ExecuteNonQuery();
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                return resultado;
+            }
+        }
+
+        public static int ActualizarAnimePorId(Animes animes)
+        {
+            int resultado = 0;
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(null, sqlConnection);
+                sqlCommand.CommandText = "Update Animes SET  nombre_anime = @nombre_anime, categoria = @categoria, duracion = @duracion where id_anime = @id_anime";
+
+                sqlCommand.Parameters.AddWithValue("@nombre_anime", animes.nombre_anime);
+                sqlCommand.Parameters.AddWithValue("@categoria", animes.categoria);
+                sqlCommand.Parameters.AddWithValue("@duracion", animes.duracion);
+
+                try
+                {
+                    sqlConnection.Open();
+                    resultado = sqlCommand.ExecuteNonQuery();
+                    sqlConnection.Close();
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
+
+            return resultado;
         }
 
         private static object ConsultaSqlAnimes(SqlConnection connection, string consulta)
